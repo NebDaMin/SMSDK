@@ -1,7 +1,5 @@
 package smsdk;
 
-
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.*;
@@ -37,14 +35,14 @@ public class YtAPI {
 
     public static final String YT_URL = "https://www.googleapis.com/youtube/v3/";
 
-    public YtAPI(String apiKey){
+    public YtAPI(String apiKey) {
         this.apiKey = apiKey;
     }
-    
+
     public JSONObject getObject(String connection, Map<String, Object> params) {
         return request(connection, params, null);
     }
-    
+
     public JSONObject request(String path, Map<String, Object> params, Map<String, Object> postArgs) {
         if (postArgs != null) {
             postArgs.put(PARAM_KEY, apiKey);
@@ -54,7 +52,7 @@ public class YtAPI {
             }
             params.put(PARAM_KEY, apiKey);
         }
-        
+
         String urlStr = YT_URL + path + '?'
                 + Utility.encodeURLParameters(params);
         String method = (postArgs == null) ? "GET" : "POST";
@@ -73,15 +71,29 @@ public class YtAPI {
 
         return resp;
     }
-    
-    public ArrayList<JSONObject> convertJsonItemsToList(JSONObject json){
+
+    public ArrayList<JSONObject> convertJsonItemsToList(JSONObject json) {
         try {
             ArrayList<JSONObject> list = new ArrayList<JSONObject>();
-            for(int i = 0; i < json.getJSONArray("items").length(); i++) {
+            for (int i = 0; i < json.getJSONArray("items").length(); i++) {
                 list.add(Utility.parseJson(json.getJSONArray("items").get(i).toString()));
             }
             return list;
-        } catch(JSONException ex){
+        } catch (JSONException ex) {
+            System.out.println(ex);
+            return null;
+        }
+    }
+
+    public ArrayList<JSONObject> convertJsonReplyToList(JSONObject json) {
+        try {
+            ArrayList<JSONObject> list = new ArrayList<JSONObject>();
+            for (int i = 0; i < json.getJSONArray("comments").length(); i++) {
+                list.add(Utility.parseJson(json.getJSONArray("comments").get(i).toString()));
+            }
+            return list;
+        } catch (JSONException ex) {
+            System.out.println(ex);
             return null;
         }
     }

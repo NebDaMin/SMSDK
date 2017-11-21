@@ -1,8 +1,5 @@
 package smsdk;
 
-
-
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.*;

@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.xml.bind.DatatypeConverter;
 
 public class TwitterOauth {
 
@@ -103,7 +104,6 @@ public class TwitterOauth {
         oauthHeaders.put(OAuthParams.OAUTH_NONCE, quoted(nonce));
         oauthHeaders.put(OAuthParams.OAUTH_VERSION, quoted(OAuthParams.ONE_DOT_OH));
         String header = Joiner.on(", ").withKeyValueSeparator("=").join(oauthHeaders);
-
         request.setHeader(HttpHeaders.AUTHORIZATION, "OAuth " + header);
     }
 
